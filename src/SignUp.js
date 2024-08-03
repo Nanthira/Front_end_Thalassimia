@@ -19,7 +19,7 @@ function Copyright(props) {
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {"Copyright © "}
             <Link color="inherit" href="https://mui.com/">
-            System for disease screening and analysis of Thalassemia and Anemia risk
+            System for disease screening and analysis of Thalassemia and Anemia risk test
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}
