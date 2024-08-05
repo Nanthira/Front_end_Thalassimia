@@ -148,12 +148,12 @@ export default function SignInSide({ onLogin, onToggleForm }) {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href="#" variant="body2">
+                                    <Link href="forgot" variant="body2">
                                         Forgot password?
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="#" variant="body2" onClick={onToggleForm}>
+                                    <Link href="signUp" variant="body2" onClick={onToggleForm}>
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
