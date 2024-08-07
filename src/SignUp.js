@@ -72,6 +72,8 @@ export default function SignUp({ onToggleForm }) {
                 body: JSON.stringify(user),
             });
 
+            console.log("response:", response);
+
             if (response.ok) {
                 const result = await response.json();
                 console.log("User created:", result);

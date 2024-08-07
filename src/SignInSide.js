@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -22,13 +23,14 @@ import Cookies from 'js-cookie'; // For handling cookies
 
 const defaultTheme = createTheme();
 
-export default function SignInSide({ onLogin, onToggleForm }) {
+export default function SignInSide({ onToggleForm }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [dialogOpen, setDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -53,7 +55,7 @@ export default function SignInSide({ onLogin, onToggleForm }) {
                     setDialogOpen(true);
                     setTimeout(() => {
                         setDialogOpen(false);
-                        onLogin(); // Call onLogin to update isAuthenticated state
+                        navigate("/home"); // Navigate to home after login success
                     }, 2000);
                 } else {
                     setAlertMessage("User not approved");
@@ -184,128 +186,3 @@ export default function SignInSide({ onLogin, onToggleForm }) {
         </ThemeProvider>
     );
 }
-
-
-// import * as React from "react";
-// import Avatar from "@mui/material/Avatar";
-// import Button from "@mui/material/Button";
-// import CssBaseline from "@mui/material/CssBaseline";
-// import TextField from "@mui/material/TextField";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
-// import Link from "@mui/material/Link";
-// import Paper from "@mui/material/Paper";
-// import Box from "@mui/material/Box";
-// import Grid from "@mui/material/Grid";
-// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-// import Typography from "@mui/material/Typography";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-// function Copyright(props) {
-//     return (
-//         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//             {"Copyright © "}
-//             <Link color="inherit" href="https://mui.com/">
-//             System for disease screening and analysis of Thalassemia and Anemia risk
-//             </Link>{" "}
-//             {new Date().getFullYear()}
-//             {"."}
-//         </Typography>
-//     );
-// }
-
-// const defaultTheme = createTheme();
-
-// export default function SignInSide({ onLogin, onToggleForm }) {
-//     const handleSubmit = (event) => {
-//         event.preventDefault();
-//         const data = new FormData(event.currentTarget);
-//         console.log({
-//             username: data.get("username"),
-//             password: data.get("password"),
-//         });
-//         onLogin(); // Call onLogin to update isAuthenticated state
-//     };
-
-//     return (
-//         <ThemeProvider theme={defaultTheme}>
-//             <Grid container component="main" sx={{ height: "100vh" }}>
-//                 <CssBaseline />
-//                 <Grid
-//                     item
-//                     xs={false}
-//                     sm={4}
-//                     md={7}
-//                     sx={{
-//                         backgroundImage:
-//                             'url("/static/images/templates/templates-images/sign-in-side-bg.png")',
-//                         backgroundColor: (t) =>
-//                             t.palette.mode === "light" ? t.palette.grey[50] : t.palette.grey[900],
-//                         backgroundSize: "cover",
-//                         backgroundPosition: "left",
-//                     }}
-//                 />
-//                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-//                     <Box
-//                         sx={{
-//                             my: 8,
-//                             mx: 4,
-//                             display: "flex",
-//                             flexDirection: "column",
-//                             alignItems: "center",
-//                         }}
-//                     >
-//                         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-//                             <LockOutlinedIcon />
-//                         </Avatar>
-//                         <Typography component="h1" variant="h5">
-//                             Sign in
-//                         </Typography>
-//                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-//                             <TextField
-//                                 margin="normal"
-//                                 required
-//                                 fullWidth
-//                                 id="username"
-//                                 label="Username"
-//                                 name="username"
-//                                 autoComplete="username"
-//                                 autoFocus
-//                             />
-//                             <TextField
-//                                 margin="normal"
-//                                 required
-//                                 fullWidth
-//                                 name="password"
-//                                 label="Password"
-//                                 type="password"
-//                                 id="password"
-//                                 autoComplete="current-password"
-//                             />
-//                             <FormControlLabel
-//                                 control={<Checkbox value="remember" color="primary" />}
-//                                 label="Remember me"
-//                             />
-//                             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-//                                 Sign In
-//                             </Button>
-//                             <Grid container>
-//                                 <Grid item xs>
-//                                     <Link href="#" variant="body2">
-//                                         Forgot password?
-//                                     </Link>
-//                                 </Grid>
-//                                 <Grid item>
-//                                     <Link href="#" variant="body2" onClick={onToggleForm}>
-//                                         {"Don't have an account? Sign Up"}
-//                                     </Link>
-//                                 </Grid>
-//                             </Grid>
-//                             <Copyright sx={{ mt: 5 }} />
-//                         </Box>
-//                     </Box>
-//                 </Grid>
-//             </Grid>
-//         </ThemeProvider>
-//     );
-// }
