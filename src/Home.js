@@ -120,7 +120,7 @@ export default function Home() {
                     </Toolbar>
                     <Divider />
                     <List component="nav">
-                    <MainListItems open={!open} />
+                    <MainListItems open={open} />
                     </List>
                 </Drawer>
                 <Box
