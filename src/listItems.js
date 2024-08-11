@@ -9,26 +9,28 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import Paper from '@mui/material/Paper';
 import Grid from "@mui/material/Grid";
 
-export const MainListItems = (
+export const MainListItems = ({ open }) => (
     <React.Fragment>
-        {/* Profile card */}
-        <Grid item xs={12} md={4}>
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <Paper
-                        sx={{
-                            p: 2,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            height: 200,
-                        }}
-                    >
-                        {/* Add any additional content here */}
-                        Name:
-                    </Paper>
+        {/* Conditionally render the Profile card */}
+        {open && (
+            <Grid item xs={12} md={4}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Paper
+                            sx={{
+                                p: 2,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                height: 200,
+                            }}
+                        >
+                            {/* Add any additional content here */}
+                            Name:
+                        </Paper>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        )}
         <ListItemButton>
             <ListItemIcon>
                 <DashboardIcon />
