@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,6 +12,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CircularProgress from "@mui/material/CircularProgress";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
@@ -33,7 +36,12 @@ const defaultTheme = createTheme();
 export default function SignUp({ onToggleForm }) {
     const [errors, setErrors] = React.useState({});
     const [loading, setLoading] = React.useState(false);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+    };
 
     const validateForm = (data) => {
         const newErrors = {};
@@ -79,8 +87,12 @@ export default function SignUp({ onToggleForm }) {
             if (response.ok) {
                 const result = await response.json();
                 console.log("User created:", result);
-                // After form submission, call onToggleForm to switch back to sign-in
-                navigate("/signIn");
+                // After form submission, switch back to sign-in
+                setDialogOpen(true);
+                    setTimeout(() => {
+                        setDialogOpen(false);
+                        navigate("/signIn"); // Navigate to signIn after create success
+                    }, 2000);
             } else {
                 console.error("Error creating user:", response.statusText);
                 setErrors({ apiError: "Failed to create user. Please try again." });
@@ -205,6 +217,16 @@ export default function SignUp({ onToggleForm }) {
                 </Box>
                 <Copyright sx={{ mt: 5 }} />
             </Container>
+            <Dialog
+                open={dialogOpen}
+                onClose={handleCloseDialog}
+                aria-labelledby="success-dialog-title"
+            >
+                <DialogTitle id="success-dialog-title">Login Success</DialogTitle>
+                <DialogContent>
+                    <Typography>Created user successfully. Redirecting back to Sign In...</Typography>
+                </DialogContent>
+            </Dialog>
         </ThemeProvider>
     );
 }
