@@ -12,9 +12,10 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { MainListItems } from "./listItems";
 import Paper from "@mui/material/Paper";
-import { SimpleLineChart } from "./Chart";
 import MenuIcon from "@mui/icons-material/Menu";
 import List from '@mui/material/List';
+import Button from '@mui/material/Button';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 const drawerWidth = 330;
@@ -62,6 +63,18 @@ const Drawer = styled(MuiDrawer, {
         }),
     },
 }));
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 const defaultTheme = createTheme();
 
@@ -120,7 +133,7 @@ export default function Home() {
                     </Toolbar>
                     <Divider />
                     <List component="nav">
-                    <MainListItems open={open} />
+                        <MainListItems open={open} />
                     </List>
                 </Drawer>
                 <Box
@@ -137,7 +150,41 @@ export default function Home() {
                 >
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        test
+                        <Grid container spacing={3}>
+                            {/* Chart */}
+                            <Grid item xs={12} md={8} lg={12}>
+                                <Paper
+                                    sx={{
+                                        p: 2,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        height: 250,
+                                    }}
+                                >
+                                    <Button
+                                        component="label"
+                                        role={undefined}
+                                        variant="contained"
+                                        tabIndex={-1}
+                                        startIcon={<CloudUploadIcon />}
+                                    >
+                                        Upload file
+                                        <VisuallyHiddenInput type="file" />
+                                    </Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={8} lg={12}>
+                                <Paper
+                                    sx={{
+                                        p: 2,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        height: 300,
+                                    }}
+                                >
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     </Container>
                 </Box>
             </Box>

@@ -8,6 +8,7 @@ import SignInSide from "./SignInSide";
 import SignUp from "./SignUp";
 import Home from "./Home"; 
 import Record from "./Record";
+import Profile from "./Profile";
 
 const defaultTheme = createTheme();
 
@@ -29,7 +30,7 @@ function App() {
                     <Route path="/home" element={<Home />} />
                     <Route path="*" element={<Navigate to="/signin" />} />
                     <Route path="/record" element={<Record/>}/>
-                    <Route path="/profile" element={<profile/>}/>
+                    <Route path="/profile" element={<Profile/>}/>
                 </Routes>
             </Router>
         </ThemeProvider>

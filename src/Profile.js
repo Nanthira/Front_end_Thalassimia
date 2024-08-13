@@ -137,7 +137,20 @@ export default function Home() {
                 >
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        test
+                        <Grid container spacing={3}>
+                            {/* Chart */}
+                            <Grid item xs={12} md={8} lg={12}>
+                                <Paper
+                                    sx={{
+                                        p: 2,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        height: 550,
+                                    }}
+                                >
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     </Container>
                 </Box>
             </Box>

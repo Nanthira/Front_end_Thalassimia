@@ -139,18 +139,41 @@ export default function Home() {
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                         <Grid container spacing={3}>
                             {/* Chart */}
-                            <Grid item xs={12} md={8} lg={9}>
+                            <Grid item xs={12} md={8} lg={8}>
                                 <Paper
                                     sx={{
                                         p: 2,
                                         display: "flex",
                                         flexDirection: "column",
-                                        height: 240,
+                                        height: 250,
                                     }}
                                 >
                                     <SimpleLineChart />
                                 </Paper>
                             </Grid>
+                            <Grid item xs={12} md={8} lg={4}>
+                                <Paper
+                                    sx={{
+                                        p: 2,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        height: 250,
+                                    }}
+                                >
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={8} lg={12}>
+                                <Paper
+                                    sx={{
+                                        p: 2,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        height: 300,
+                                    }}
+                                >
+                                </Paper>
+                            </Grid>
+
                         </Grid>
                     </Container>
                 </Box>
