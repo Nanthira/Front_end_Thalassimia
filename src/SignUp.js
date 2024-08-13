@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CircularProgress from "@mui/material/CircularProgress";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
     return (
@@ -32,6 +33,7 @@ const defaultTheme = createTheme();
 export default function SignUp({ onToggleForm }) {
     const [errors, setErrors] = React.useState({});
     const [loading, setLoading] = React.useState(false);
+    const navigate = useNavigate(); 
 
     const validateForm = (data) => {
         const newErrors = {};
@@ -78,7 +80,7 @@ export default function SignUp({ onToggleForm }) {
                 const result = await response.json();
                 console.log("User created:", result);
                 // After form submission, call onToggleForm to switch back to sign-in
-                onToggleForm();
+                navigate("/signIn");
             } else {
                 console.error("Error creating user:", response.statusText);
                 setErrors({ apiError: "Failed to create user. Please try again." });
