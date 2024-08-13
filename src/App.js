@@ -6,7 +6,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import SignInSide from "./SignInSide";
 import SignUp from "./SignUp";
-import Home from "./Home"; // Import the new Home component
+import Home from "./Home"; 
+import Record from "./Record";
 
 const defaultTheme = createTheme();
 
@@ -27,6 +28,8 @@ function App() {
                     <Route path="/dashboard" element={isAuthenticated ? <Home /> : <Navigate to="/signin" />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="*" element={<Navigate to="/signin" />} />
+                    <Route path="/record" element={<Record/>}/>
+                    <Route path="/profile" element={<profile/>}/>
                 </Routes>
             </Router>
         </ThemeProvider>
