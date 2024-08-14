@@ -17,6 +17,15 @@ import List from '@mui/material/List';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const drawerWidth = 330;
 
@@ -78,11 +87,80 @@ const VisuallyHiddenInput = styled('input')({
 
 const defaultTheme = createTheme();
 
-export default function Home() {
+export default function Record() {
     const [open, setOpen] = React.useState(true);
+    const [selectedFile, setSelectedFile] = React.useState(null);
+    const [dialogOpen, setDialogOpen] = React.useState(false);
+    const [uploadSuccess, setUploadSuccess] = React.useState(false);
+    const [userData, setUserData] = React.useState(null); // Use userData state
+    const navigate = useNavigate();
+
     const toggleDrawer = () => {
         setOpen(!open);
     };
+
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
+    const handleUpload = async () => {
+        if (!selectedFile) {
+            alert("Please select a file to upload.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        formData.append("userId", userData?.userId); // Use userId from userData
+
+        try {
+            const response = await fetch('http://localhost:4000/pictures/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                setUploadSuccess(true);
+                setDialogOpen(true);
+                setTimeout(() => {
+                    setDialogOpen(false);
+                    navigate("/home");
+                }, 2000);
+            } else {
+                alert("Upload failed. Please try again.");
+            }
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    };
+
+    React.useEffect(() => {
+        const fetchUserData = async () => {
+            const token = Cookies.get('token'); // Get token from cookie
+
+            if (token) {
+                try {
+                    const response = await fetch('http://localhost:4000/users/get_user_data', {
+                        method: 'GET',
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setUserData(data.data); // Set the user data
+                    } else {
+                        console.error('Failed to fetch user data:', response.status);
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -158,7 +236,7 @@ export default function Home() {
                                         p: 2,
                                         display: "flex",
                                         flexDirection: "column",
-                                        height: 250,
+                                        height: 100,
                                     }}
                                 >
                                     <Button
@@ -169,8 +247,13 @@ export default function Home() {
                                         startIcon={<CloudUploadIcon />}
                                     >
                                         Upload file
-                                        <VisuallyHiddenInput type="file" />
+                                        <VisuallyHiddenInput type="file" onChange={handleFileChange} />
                                     </Button>
+                                    {selectedFile && (
+                                        <Typography sx={{ mt: 2 }}>
+                                            Selected file: {selectedFile.name}
+                                        </Typography>
+                                    )}
                                 </Paper>
                             </Grid>
                             <Grid item xs={12} md={8} lg={12}>
@@ -179,13 +262,47 @@ export default function Home() {
                                         p: 2,
                                         display: "flex",
                                         flexDirection: "column",
-                                        height: 300,
+                                        height: 500,
                                     }}
                                 >
+                                    {selectedFile && (
+                                        <img
+                                            src={URL.createObjectURL(selectedFile)}
+                                            alt="Preview"
+                                            style={{ maxWidth: '100%', maxHeight: '450px' }}
+                                        />
+                                    )}
                                 </Paper>
+                                <Button
+                                        variant="contained"
+                                        onClick={handleUpload}
+                                        sx={{ mt: 2 }}
+                                    >
+                                        Upload
+                                    </Button>
                             </Grid>
                         </Grid>
                     </Container>
+
+                    {/* Dialog for Upload Success */}
+                    <Dialog
+                        open={dialogOpen}
+                        onClose={() => setDialogOpen(false)}
+                    >
+                        <DialogContent>
+                            <DialogContentText>
+                                Image uploaded successfully!
+                                <Box sx={{ display: 'flex' }} >
+                                    <CircularProgress />
+                                </Box>
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setDialogOpen(false)} color="primary">
+                                Close
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </Box>
             </Box>
         </ThemeProvider>

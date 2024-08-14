@@ -9,6 +9,7 @@ import SignUp from "./SignUp";
 import Home from "./Home"; 
 import Record from "./Record";
 import Profile from "./Profile";
+import UploadPicture from "./uploadPicture";
 
 const defaultTheme = createTheme();
 
@@ -31,6 +32,7 @@ function App() {
                     <Route path="*" element={<Navigate to="/signin" />} />
                     <Route path="/record" element={<Record/>}/>
                     <Route path="/profile" element={<Profile/>}/>
+                    <Route path='/upload' element={<UploadPicture/>}/>
                 </Routes>
             </Router>
         </ThemeProvider>

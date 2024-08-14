@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie'; // Import js-cookie
+import { useNavigate } from 'react-router-dom';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -11,15 +13,43 @@ import Paper from '@mui/material/Paper';
 import Grid from "@mui/material/Grid";
 
 export const MainListItems = ({ open }) => {
-    const navigate = useNavigate(); // Initialize the navigate function
+    const navigate = useNavigate();
+    const [userData, setUserData] = useState({ firstname: '', role: '' });
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = Cookies.get('token'); // Get token from cookie
+
+            if (token) {
+                try {
+                    const response = await fetch('http://localhost:4000/users/get_user_data', {
+                        method: 'GET',
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setUserData(data.data); // Set the user data
+                    } else {
+                        console.error('Failed to fetch user data:', response.status);
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     const handleNavigation = (path) => {
-        navigate(path); // Navigate to the specified path
+        navigate(path);
     };
 
     return (
         <React.Fragment>
-            {/* Conditionally render the Profile card */}
             {open && (
                 <Grid item xs={12} md={4}>
                     <Grid container spacing={3}>
@@ -32,8 +62,8 @@ export const MainListItems = ({ open }) => {
                                     height: 'flex',
                                 }}
                             >
-                                Name: 
-                                User role: 
+                                Name: {userData.firstname} {/* Display username */}
+                                User role: {userData.role} {/* Display role */}
                             </Paper>
                         </Grid>
                     </Grid>
