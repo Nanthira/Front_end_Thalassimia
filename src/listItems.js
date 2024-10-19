@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 
 export const MainListItems = ({ open }) => {
     const navigate = useNavigate();
-    const [userData, setUserData] = useState({ firstname: '', role: '' });
+    const [userData, setUserData] = useState({ firstname: '',lastname:'', role: '' });
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -62,8 +62,8 @@ export const MainListItems = ({ open }) => {
                                     height: 'flex',
                                 }}
                             >
-                                Name: {userData.firstname} {/* Display username */}
-                                User role: {userData.role} {/* Display role */}
+                                <div>Name: {userData.firstname} {userData.lastname}</div> {/* Display username */}
+                                <div>User role: {userData.role}</div> {/* Display role */}
                             </Paper>
                         </Grid>
                     </Grid>
@@ -87,6 +87,35 @@ export const MainListItems = ({ open }) => {
                 </ListItemIcon>
                 <ListItemText primary="Profile" />
             </ListItemButton>
+
+            <ListItemButton onClick={() => handleNavigation('/approve')}>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Approve" />
+            </ListItemButton> 
+
+            <ListItemButton onClick={() => handleNavigation('/AllUser')}>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="User List" />
+            </ListItemButton> 
+
+            <ListItemButton onClick={() => handleNavigation('/recordMulti')}>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Upload Picture" />
+            </ListItemButton> 
+
+            <ListItemButton onClick={() => handleNavigation('/predict')}>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Prediction" />
+            </ListItemButton> 
+
             <ListItemButton onClick={() => handleNavigation('/signin')}>
                 <ListItemIcon>
                     <LogoutIcon />

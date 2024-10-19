@@ -10,6 +10,10 @@ import Home from "./Home";
 import Record from "./Record";
 import Profile from "./Profile";
 import UploadPicture from "./uploadPicture";
+import Approve from "./Approve";
+import ListUser from "./ListUser";
+import RecordMulti from "./RecordMulti";
+import Prediction from "./Prediction";
 
 const defaultTheme = createTheme();
 
@@ -33,6 +37,10 @@ function App() {
                     <Route path="/record" element={<Record/>}/>
                     <Route path="/profile" element={<Profile/>}/>
                     <Route path='/upload' element={<UploadPicture/>}/>
+                    <Route path="/recordMulti" element={<RecordMulti/>}/>
+                    <Route path="/AllUser" element={<ListUser/>}/>
+                    <Route path="/approve" element={<Approve/>}/>
+                    <Route path="/predict" element={<Prediction/>}/>
                 </Routes>
             </Router>
         </ThemeProvider>
