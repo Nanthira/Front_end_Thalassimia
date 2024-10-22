@@ -108,9 +108,52 @@ export default function Prediction() {
     };
 
     const handlePrediction = async () => {
-        // Call the prediction API here (not implemented yet)
-        console.log('Selected images for prediction:', selectedImages);
-        // Implement your prediction logic here
+        if (selectedImages.length === 0) {
+            alert('Please select an image.');
+            return;
+        }
+    
+        const formData = new FormData();
+        
+        // Find the selected image object from the images state
+        const selectedImage = images.find(image => image.fileName === selectedImages[0]);
+        
+        if (!selectedImage) {
+            alert('Selected image not found.');
+            return;
+        }
+    
+        // Use the file URL or path to get the actual file blob from the server
+        const response = await fetch(`http://localhost:4000/${selectedImage.fileUrl}`);
+        
+        if (!response.ok) {
+            alert('Failed to fetch the image file.');
+            return;
+        }
+    
+        const imageBlob = await response.blob(); // Get the image as a Blob
+        formData.append('image', imageBlob, selectedImage.fileName); // Append the Blob to FormData
+    
+        // Append userId to formData
+        formData.append('userId', userId); // Add userId to form data
+    
+        try {
+            const predictionResponse = await fetch('http://localhost:4000/pictures/predict', {
+                method: 'POST',
+                body: formData,
+            });
+    
+            const result = await predictionResponse.json();
+            if (result.status === 200) {
+                console.log('Prediction result:', result);
+                alert(`Prediction: ${result.prediction} (Confidence: ${result.confidence})`);
+            } else {
+                alert(result.error);
+            }
+        } catch (error) {
+            console.error('Error during prediction:', error);
+            alert('Prediction failed.');
+        }
     };
 
     return (
