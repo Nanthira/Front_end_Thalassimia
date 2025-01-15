@@ -14,6 +14,7 @@ import Approve from "./Approve";
 import ListUser from "./ListUser";
 import RecordMulti from "./RecordMulti";
 import Prediction from "./Prediction";
+import Confirm from "./Confirm";
 
 const defaultTheme = createTheme();
 
@@ -41,6 +42,7 @@ function App() {
                     <Route path="/AllUser" element={<ListUser/>}/>
                     <Route path="/approve" element={<Approve/>}/>
                     <Route path="/predict" element={<Prediction/>}/>
+                    <Route path="/confirm" element={<Confirm/>}/>
                 </Routes>
             </Router>
         </ThemeProvider>
